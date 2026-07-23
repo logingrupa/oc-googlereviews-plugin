@@ -1,0 +1,66 @@
+{% set obReviewCollection = __SELF__.reviewCollection %}
+{% set sSchemaJson = __SELF__.schemaJson %}
+
+{% if obReviewCollection.isNotEmpty %}
+    <section class="google-reviews" aria-label="{{ 'logingrupa.googlereviews::lang.component.aria_label'|trans }}">
+        <ul class="google-reviews__list">
+            {% for obReview in obReviewCollection %}
+                <li class="google-reviews__item">
+                    <article class="google-reviews__card">
+                        <header class="google-reviews__head">
+                            {% if obReview.author_photo_url %}
+                                <img
+                                    class="google-reviews__avatar"
+                                    src="{{ obReview.author_photo_url }}"
+                                    alt=""
+                                    loading="lazy"
+                                    width="48"
+                                    height="48"
+                                >
+                            {% endif %}
+                            <div class="google-reviews__meta">
+                                {% if obReview.author_url %}
+                                    <a
+                                        class="google-reviews__author"
+                                        href="{{ obReview.author_url }}"
+                                        target="_blank"
+                                        rel="nofollow noopener"
+                                        aria-label="{{ 'logingrupa.googlereviews::lang.component.author_profile_label'|trans({':author': obReview.author_name}) }}"
+                                    >{{ obReview.author_name }}</a>
+                                {% else %}
+                                    <span class="google-reviews__author">{{ obReview.author_name }}</span>
+                                {% endif %}
+                                <span class="google-reviews__rating" role="img" aria-label="{{ obReview.rating }}/5">
+                                    {% for iStar in 1..5 %}{{ iStar <= obReview.rating ? '★' : '☆' }}{% endfor %}
+                                </span>
+                            </div>
+                        </header>
+
+                        {% if obReview.text_english %}
+                            <p class="google-reviews__text">{{ obReview.text_english }}</p>
+                        {% endif %}
+
+                        {% if obReview.published_at_display %}
+                            <time class="google-reviews__date" datetime="{{ obReview.published_at_iso }}">
+                                {{ obReview.published_at_display }}
+                            </time>
+                        {% endif %}
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="google-reviews__attribution">
+            <a
+                class="google-reviews__attribution-link"
+                href="https://www.google.com/maps"
+                target="_blank"
+                rel="nofollow noopener"
+            >{{ 'logingrupa.googlereviews::lang.component.attribution'|trans }}</a>
+        </p>
+    </section>
+
+    {% if sSchemaJson %}
+        <script type="application/ld+json">{{ sSchemaJson|raw }}</script>
+    {% endif %}
+{% endif %}

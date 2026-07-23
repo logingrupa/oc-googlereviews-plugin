@@ -1,0 +1,26 @@
+{
+    "name": "logingrupa/oc-googlereviews-plugin",
+    "type": "october-plugin",
+    "description": "Fetch and display Google Business Profile reviews (Places API New), translated to English, cached via Lovata.Toolbox.",
+    "keywords": ["octobercms", "google", "reviews", "places-api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Logingrupa"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "composer/installers": "~1.0",
+        "lovata/toolbox-plugin": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^2.0",
+        "larastan/larastan": "^3.0",
+        "phpmd/phpmd": "^2.15"
+    },
+    "extra": {
+        "installer-name": "googlereviews"
+    }
+}

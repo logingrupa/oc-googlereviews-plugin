@@ -1,0 +1,14 @@
+includes:
+    - ../../../vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - classes
+        - console
+        - components
+    scanDirectories:
+        - models
+    excludePaths:
+        - tests
+    reportUnmatchedIgnoredErrors: false

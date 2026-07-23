@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="GoogleReviews rules"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Pragmatic mess-detection for an OctoberCMS plugin. Keeps complexity,
+        unused-code, naming and design rules; drops StaticAccess because Eloquent,
+        Lovata.Toolbox factories (Item::make/Collection::make), October settings
+        (Settings::instance) and Carbon::parse are idiomatic static framework APIs.
+    </description>
+
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess"/>
+        <exclude name="BooleanArgumentFlag"/>
+    </rule>
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/design.xml"/>
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml"/>
+</ruleset>

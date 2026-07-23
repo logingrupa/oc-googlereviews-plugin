@@ -1,0 +1,19 @@
+fields:
+    api_key:
+        label: logingrupa.googlereviews::lang.settings.api_key
+        comment: logingrupa.googlereviews::lang.settings.api_key_comment
+        type: text
+        span: full
+    place_id:
+        label: logingrupa.googlereviews::lang.settings.place_id
+        comment: logingrupa.googlereviews::lang.settings.place_id_comment
+        type: text
+        span: left
+    min_rating:
+        label: logingrupa.googlereviews::lang.settings.min_rating
+        comment: logingrupa.googlereviews::lang.settings.min_rating_comment
+        type: number
+        span: left
+        default: 4
+        min: 1
+        max: 5
