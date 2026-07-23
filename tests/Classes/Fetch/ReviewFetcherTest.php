@@ -13,6 +13,7 @@ use Logingrupa\GoogleReviews\Classes\Fetch\ReviewSynchronizer;
 use Logingrupa\GoogleReviews\Models\Review;
 use Logingrupa\GoogleReviews\Models\Settings;
 use PluginTestCase;
+use System\Behaviors\SettingsModel;
 
 class ReviewFetcherTest extends PluginTestCase
 {
@@ -20,6 +21,7 @@ class ReviewFetcherTest extends PluginTestCase
     {
         parent::setUp();
         Cache::flush();
+        SettingsModel::clearInternalCache();
     }
 
     private function makeFetcher(): ReviewFetcher

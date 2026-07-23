@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Logingrupa\GoogleReviews\Models\Review;
 use Logingrupa\GoogleReviews\Models\Settings;
 use PluginTestCase;
+use System\Behaviors\SettingsModel;
 
 class FetchGoogleReviewsTest extends PluginTestCase
 {
@@ -17,6 +18,7 @@ class FetchGoogleReviewsTest extends PluginTestCase
     {
         parent::setUp();
         Cache::flush();
+        SettingsModel::clearInternalCache();
     }
 
     /**
