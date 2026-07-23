@@ -10,7 +10,7 @@ return [
     'settings' => [
         'label' => 'Google Reviews',
         'description' => 'Configure the Google Places credentials and fetch options.',
-        'category' => 'Reviews',
+        'category' => 'Frontend',
         'permission' => 'Manage Google Reviews settings',
         'api_key' => 'Google Places API key',
         'api_key_comment' => 'A Places API (New) key with billing enabled.',
