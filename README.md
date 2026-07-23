@@ -11,6 +11,42 @@ Fetch Google Business Profile reviews via the **Places API (New)**, translated t
 
 ## Installation
 
+This plugin is not on the OctoberCMS Marketplace or Packagist yet, so install it
+straight from the Git repository with October's native installer.
+
+**From Git (recommended):**
+
+```bash
+php artisan plugin:install Logingrupa.GoogleReviews \
+    --from=git@github.com:logingrupa/oc-googlereviews-plugin.git --oc
+```
+
+- `--oc` is required because the package name carries the `oc-` prefix
+  (`logingrupa/oc-googlereviews-plugin`).
+- `plugin:install` adds the repository to `composer.json` and runs Composer under
+  the hood, so the plugin is Composer-managed and survives deploys.
+
+Pin a specific tag or branch with `--want`:
+
+```bash
+# a released tag
+php artisan plugin:install Logingrupa.GoogleReviews \
+    --from=git@github.com:logingrupa/oc-googlereviews-plugin.git --oc --want=v1.0.1
+
+# a development branch
+php artisan plugin:install Logingrupa.GoogleReviews \
+    --from=git@github.com:logingrupa/oc-googlereviews-plugin.git --oc --want=dev-master
+```
+
+Then run migrations (the installer usually does this automatically):
+
+```bash
+php artisan october:migrate
+```
+
+**Via Composer** (once published to Packagist, or if you add the VCS repository
+manually to the root `composer.json`):
+
 ```bash
 composer require logingrupa/oc-googlereviews-plugin
 php artisan october:migrate

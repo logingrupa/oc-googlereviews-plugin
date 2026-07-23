@@ -10,6 +10,7 @@ use Logingrupa\GoogleReviews\Components\ReviewList;
 use Logingrupa\GoogleReviews\Console\FetchGoogleReviews;
 use Logingrupa\GoogleReviews\Models\Settings;
 use System\Classes\PluginBase;
+use System\Classes\SettingsManager;
 
 /**
  * GoogleReviews plugin registration.
@@ -60,7 +61,7 @@ class Plugin extends PluginBase
             'settings' => [
                 'label' => 'logingrupa.googlereviews::lang.settings.label',
                 'description' => 'logingrupa.googlereviews::lang.settings.description',
-                'category' => 'logingrupa.googlereviews::lang.settings.category',
+                'category' => SettingsManager::CATEGORY_CMS,
                 'icon' => 'icon-star',
                 'class' => Settings::class,
                 'order' => 500,

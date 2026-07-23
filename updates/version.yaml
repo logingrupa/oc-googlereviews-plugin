@@ -3,3 +3,5 @@
     - create_google_reviews_table.php
 1.0.1:
     - "Move backend settings into the Frontend category."
+1.0.2:
+    - "Place backend settings inside October's built-in CMS/Frontend settings group (SettingsManager::CATEGORY_CMS) and document Git-based install (plugin:install --from) in the README."
