@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Logingrupa\GoogleReviews\Models;
 
 use Model;
+use October\Rain\Database\Traits\Encryptable;
 use System\Behaviors\SettingsModel;
 
 /**
  * Backend-managed configuration: API credentials, place id, aggregate snapshot.
+ *
+ * The API key is encrypted at rest via October's Encryptable trait and masked
+ * in the backend by the `sensitive` field type.
  *
  * @method static self instance()
  * @method static mixed get(string $sKey, mixed $obDefault = null)
@@ -16,6 +20,8 @@ use System\Behaviors\SettingsModel;
  */
 class Settings extends Model
 {
+    use Encryptable;
+
     /**
      * @var array<int, class-string>
      */
@@ -24,6 +30,11 @@ class Settings extends Model
     public $settingsCode = 'logingrupa_googlereviews_settings';
 
     public $settingsFields = 'fields.yaml';
+
+    /**
+     * @var array<int, string>
+     */
+    protected $encryptable = ['api_key'];
 
     public function getApiKey(): string
     {

@@ -1,0 +1,19 @@
+<div class="google-reviews-preview">
+    <div class="grp-toolbar">
+        <h4 class="grp-heading"><?= e(trans('logingrupa.googlereviews::lang.preview.title')) ?></h4>
+        <button
+            type="button"
+            class="btn btn-default grp-refresh"
+            data-request="<?= $this->getEventHandler('onRefreshReviews') ?>"
+            data-load-indicator="<?= e(trans('logingrupa.googlereviews::lang.preview.loading')) ?>">
+            <i class="icon-refresh"></i>
+            <?= e(trans('logingrupa.googlereviews::lang.preview.refresh')) ?>
+        </button>
+    </div>
+
+    <div id="<?= $this->getId('preview') ?>" class="grp-body">
+        <?= $this->makePartial('preview') ?>
+    </div>
+
+    <p class="grp-hint"><?= e(trans('logingrupa.googlereviews::lang.preview.hint')) ?></p>
+</div>

@@ -1,0 +1,109 @@
+.google-reviews-preview {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    padding: 16px;
+    background: #fbfbfc;
+}
+
+.google-reviews-preview .grp-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.google-reviews-preview .grp-heading {
+    margin: 0;
+    font-weight: 600;
+}
+
+.google-reviews-preview .grp-aggregate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.google-reviews-preview .grp-rating {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    color: #1f2d3d;
+}
+
+.google-reviews-preview .grp-stars {
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #f4b400;
+}
+
+.google-reviews-preview .grp-count {
+    color: #7a869a;
+    font-size: 13px;
+}
+
+.google-reviews-preview .grp-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.google-reviews-preview .grp-card {
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+
+.google-reviews-preview .grp-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.google-reviews-preview .grp-card-author {
+    font-weight: 600;
+    color: #1f2d3d;
+}
+
+.google-reviews-preview .grp-card-stars {
+    color: #f4b400;
+    letter-spacing: 1px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.google-reviews-preview .grp-card-text {
+    margin: 0 0 8px;
+    color: #3c4858;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.google-reviews-preview .grp-card-date {
+    color: #9aa5b1;
+    font-size: 12px;
+}
+
+.google-reviews-preview .grp-empty {
+    color: #7a869a;
+    font-style: italic;
+    margin: 8px 0;
+}
+
+.google-reviews-preview .grp-hint {
+    margin: 12px 0 0;
+    color: #9aa5b1;
+    font-size: 12px;
+}
+
+.google-reviews-preview .grp-error {
+    margin-bottom: 14px;
+}

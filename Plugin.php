@@ -8,6 +8,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
 use Logingrupa\GoogleReviews\Components\ReviewList;
 use Logingrupa\GoogleReviews\Console\FetchGoogleReviews;
+use Logingrupa\GoogleReviews\FormWidgets\ReviewPreview;
 use Logingrupa\GoogleReviews\Models\Settings;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
@@ -40,6 +41,16 @@ class Plugin extends PluginBase
     public function register(): void
     {
         $this->registerConsoleCommand('logingrupa.googlereviews.fetch', FetchGoogleReviews::class);
+    }
+
+    /**
+     * @return array<class-string, string>
+     */
+    public function registerFormWidgets(): array
+    {
+        return [
+            ReviewPreview::class => 'logingrupa_googlereviews_preview',
+        ];
     }
 
     /**

@@ -2,21 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Logingrupa\GoogleReviews\Tests\Console;
+namespace Logingrupa\GoogleReviews\Tests\Classes\Fetch;
 
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Logingrupa\GoogleReviews\Classes\Api\GooglePlacesClient;
+use Logingrupa\GoogleReviews\Classes\Fetch\ReviewFetcher;
+use Logingrupa\GoogleReviews\Classes\Fetch\ReviewSynchronizer;
 use Logingrupa\GoogleReviews\Models\Review;
 use Logingrupa\GoogleReviews\Models\Settings;
 use PluginTestCase;
 
-class FetchGoogleReviewsTest extends PluginTestCase
+class ReviewFetcherTest extends PluginTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
         Cache::flush();
+    }
+
+    private function makeFetcher(): ReviewFetcher
+    {
+        return new ReviewFetcher(new GooglePlacesClient(app(HttpFactory::class)), new ReviewSynchronizer());
     }
 
     /**
@@ -26,8 +34,8 @@ class FetchGoogleReviewsTest extends PluginTestCase
     {
         return [
             'id' => 'PLACE_ID',
-            'rating' => 4.9,
-            'userRatingCount' => 88,
+            'rating' => 4.7,
+            'userRatingCount' => 55,
             'reviews' => [
                 [
                     'name' => 'places/PLACE_ID/reviews/REVIEW_1',
@@ -41,37 +49,17 @@ class FetchGoogleReviewsTest extends PluginTestCase
         ];
     }
 
-    public function testCommandFailsWhenNotConfigured(): void
+    public function testFetchStoresReviewsAndAggregate(): void
     {
-        $this->assertSame(1, Artisan::call('googlereviews:fetch'));
-    }
-
-    public function testCommandStoresReviewsAndAggregate(): void
-    {
-        Settings::set('api_key', 'api-key');
-        Settings::set('place_id', 'PLACE_ID');
-        Settings::set('min_rating', 4);
-
         Http::fake([
             'places.googleapis.com/*' => Http::response($this->samplePayload(), 200),
         ]);
 
-        $this->assertSame(0, Artisan::call('googlereviews:fetch'));
+        $iActiveCount = $this->makeFetcher()->fetch('api-key', 'PLACE_ID', 4);
 
+        $this->assertSame(1, $iActiveCount);
         $this->assertSame(1, Review::query()->where('is_active', true)->count());
-        $this->assertSame(4.9, (float) Settings::get('aggregate_rating'));
-        $this->assertSame(88, (int) Settings::get('aggregate_count'));
-    }
-
-    public function testCommandFailsGracefullyOnApiError(): void
-    {
-        Settings::set('api_key', 'api-key');
-        Settings::set('place_id', 'PLACE_ID');
-
-        Http::fake([
-            'places.googleapis.com/*' => Http::response(['error' => 'denied'], 403),
-        ]);
-
-        $this->assertSame(1, Artisan::call('googlereviews:fetch'));
+        $this->assertSame(4.7, (float) Settings::get('aggregate_rating'));
+        $this->assertSame(55, (int) Settings::get('aggregate_count'));
     }
 }

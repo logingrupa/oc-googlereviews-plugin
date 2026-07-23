@@ -1,0 +1,35 @@
+<?php if (!empty($sErrorMessage)): ?>
+    <div class="callout callout-danger grp-error">
+        <div class="header"><i class="icon-warning"></i><?= e(trans('logingrupa.googlereviews::lang.preview.error_title')) ?></div>
+        <p><?= e($sErrorMessage) ?></p>
+    </div>
+<?php endif ?>
+
+<?php if ($iAggregateCount > 0): ?>
+    <div class="grp-aggregate">
+        <span class="grp-rating"><?= e(number_format($fAggregateRating, 1)) ?></span>
+        <span class="grp-stars" aria-hidden="true"><?php for ($iStar = 1; $iStar <= 5; $iStar++): ?><?= $iStar <= (int) round($fAggregateRating) ? '★' : '☆' ?><?php endfor ?></span>
+        <span class="grp-count"><?= e(trans('logingrupa.googlereviews::lang.preview.count', ['count' => $iAggregateCount])) ?></span>
+    </div>
+<?php endif ?>
+
+<?php if ($obReviewList->isNotEmpty()): ?>
+    <ul class="grp-list">
+        <?php foreach ($obReviewList as $obReview): ?>
+            <li class="grp-card">
+                <div class="grp-card-head">
+                    <span class="grp-card-author"><?= e($obReview->author_name) ?></span>
+                    <span class="grp-card-stars" aria-label="<?= e($obReview->rating) ?>/5"><?php for ($iStar = 1; $iStar <= 5; $iStar++): ?><?= $iStar <= (int) $obReview->rating ? '★' : '☆' ?><?php endfor ?></span>
+                </div>
+                <?php if (!empty($obReview->text_english)): ?>
+                    <p class="grp-card-text"><?= e($obReview->text_english) ?></p>
+                <?php endif ?>
+                <?php if (!empty($obReview->published_at_display)): ?>
+                    <time class="grp-card-date"><?= e($obReview->published_at_display) ?></time>
+                <?php endif ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php else: ?>
+    <p class="grp-empty"><?= e(trans('logingrupa.googlereviews::lang.preview.empty')) ?></p>
+<?php endif ?>

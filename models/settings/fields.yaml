@@ -2,7 +2,8 @@ fields:
     api_key:
         label: logingrupa.googlereviews::lang.settings.api_key
         comment: logingrupa.googlereviews::lang.settings.api_key_comment
-        type: text
+        type: sensitive
+        allowCopy: true
         span: full
     place_id:
         label: logingrupa.googlereviews::lang.settings.place_id
@@ -13,7 +14,10 @@ fields:
         label: logingrupa.googlereviews::lang.settings.min_rating
         comment: logingrupa.googlereviews::lang.settings.min_rating_comment
         type: number
-        span: left
+        span: right
         default: 4
         min: 1
         max: 5
+    reviews_preview:
+        type: logingrupa_googlereviews_preview
+        span: full

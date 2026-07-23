@@ -5,3 +5,5 @@
     - "Move backend settings into the Frontend category."
 1.0.2:
     - "Place backend settings inside October's built-in CMS/Frontend settings group (SettingsManager::CATEGORY_CMS) and document Git-based install (plugin:install --from) in the README."
+1.0.3:
+    - "Encrypt the API key at rest (Encryptable) and mask it with the sensitive field type; add a backend live-preview widget (rating, stars, review cards) with a manual AJAX Fetch-now button; extract the shared ReviewFetcher service used by the console command and the preview."
