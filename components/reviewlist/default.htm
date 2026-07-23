@@ -1,62 +1,86 @@
+{% import _self as gr %}
+
+{% macro card(obReview) %}
+    <article class="gr-card">
+        <div class="gr-card__stars" role="img" aria-label="{{ obReview.rating }}/5">
+            {% for iStar in 1..5 %}<span class="gr-star{{ iStar <= obReview.rating ? ' is-filled' }}" aria-hidden="true">★</span>{% endfor %}
+        </div>
+
+        {% if obReview.text_english %}
+            <blockquote class="gr-card__text">{{ obReview.text_english }}</blockquote>
+        {% endif %}
+
+        <footer class="gr-card__foot">
+            {% if obReview.author_photo_url %}
+                <img class="gr-card__avatar" src="{{ obReview.author_photo_url }}" alt="" loading="lazy" width="40" height="40">
+            {% endif %}
+            <div class="gr-card__meta">
+                {% if obReview.author_url %}
+                    <a class="gr-card__author" href="{{ obReview.author_url }}" target="_blank" rel="nofollow noopener">{{ obReview.author_name }}</a>
+                {% else %}
+                    <span class="gr-card__author">{{ obReview.author_name }}</span>
+                {% endif %}
+                {% if obReview.published_at_display %}
+                    <time class="gr-card__date" datetime="{{ obReview.published_at_iso }}">{{ obReview.published_at_display }}</time>
+                {% endif %}
+            </div>
+        </footer>
+    </article>
+{% endmacro %}
+
 {% set obReviewCollection = __SELF__.reviewCollection %}
+{% set sStyle = __SELF__.style %}
 {% set sSchemaJson = __SELF__.schemaJson %}
 
 {% if obReviewCollection.isNotEmpty %}
-    <section class="google-reviews" aria-label="{{ 'logingrupa.googlereviews::lang.component.aria_label'|trans }}">
-        <ul class="google-reviews__list">
-            {% for obReview in obReviewCollection %}
-                <li class="google-reviews__item">
-                    <article class="google-reviews__card">
-                        <header class="google-reviews__head">
-                            {% if obReview.author_photo_url %}
-                                <img
-                                    class="google-reviews__avatar"
-                                    src="{{ obReview.author_photo_url }}"
-                                    alt=""
-                                    loading="lazy"
-                                    width="48"
-                                    height="48"
-                                >
-                            {% endif %}
-                            <div class="google-reviews__meta">
-                                {% if obReview.author_url %}
-                                    <a
-                                        class="google-reviews__author"
-                                        href="{{ obReview.author_url }}"
-                                        target="_blank"
-                                        rel="nofollow noopener"
-                                        aria-label="{{ 'logingrupa.googlereviews::lang.component.author_profile_label'|trans({':author': obReview.author_name}) }}"
-                                    >{{ obReview.author_name }}</a>
-                                {% else %}
-                                    <span class="google-reviews__author">{{ obReview.author_name }}</span>
-                                {% endif %}
-                                <span class="google-reviews__rating" role="img" aria-label="{{ obReview.rating }}/5">
-                                    {% for iStar in 1..5 %}{{ iStar <= obReview.rating ? '★' : '☆' }}{% endfor %}
-                                </span>
-                            </div>
-                        </header>
+    <section class="gr-reviews gr-reviews--{{ sStyle }}" aria-label="{{ 'logingrupa.googlereviews::lang.component.aria_label'|trans }}">
+        {% if __SELF__.property('eyebrow') or __SELF__.property('heading') %}
+            <header class="gr-reviews__header">
+                {% if __SELF__.property('eyebrow') %}
+                    <p class="gr-reviews__eyebrow">{{ __SELF__.property('eyebrow') }}</p>
+                {% endif %}
+                {% if __SELF__.property('heading') %}
+                    <h2 class="gr-reviews__title">{{ __SELF__.property('heading') }}</h2>
+                {% endif %}
+            </header>
+        {% endif %}
 
-                        {% if obReview.text_english %}
-                            <p class="google-reviews__text">{{ obReview.text_english }}</p>
-                        {% endif %}
+        {% set arAggregate = __SELF__.aggregate %}
+        {% if arAggregate %}
+            <div class="gr-reviews__aggregate">
+                <span class="gr-reviews__rating">{{ arAggregate.rating|number_format(1) }}</span>
+                <span class="gr-card__stars" role="img" aria-label="{{ arAggregate.rating }}/5">
+                    {% for iStar in 1..5 %}<span class="gr-star{{ iStar <= arAggregate.rating|round ? ' is-filled' }}" aria-hidden="true">★</span>{% endfor %}
+                </span>
+                <span class="gr-reviews__count">{{ 'logingrupa.googlereviews::lang.component.aggregate_count'|trans({':count': arAggregate.count}) }}</span>
+            </div>
+        {% endif %}
 
-                        {% if obReview.published_at_display %}
-                            <time class="google-reviews__date" datetime="{{ obReview.published_at_iso }}">
-                                {{ obReview.published_at_display }}
-                            </time>
-                        {% endif %}
-                    </article>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if sStyle == 'slider' %}
+            <div class="gr-slider" {{ __SELF__.sliderAttributes|raw }}>
+                <div class="gr-slider__viewport">
+                    <div class="gr-slider__track">
+                        {% for obReview in obReviewCollection %}
+                            <div class="gr-slider__slide">{{ gr.card(obReview) }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="gr-slider__nav gr-slider__nav--prev" type="button" aria-label="{{ 'logingrupa.googlereviews::lang.component.prev'|trans }}">‹</button>
+                <button class="gr-slider__nav gr-slider__nav--next" type="button" aria-label="{{ 'logingrupa.googlereviews::lang.component.next'|trans }}">›</button>
+                <div class="gr-slider__dots" role="tablist" aria-label="{{ 'logingrupa.googlereviews::lang.component.aria_label'|trans }}"></div>
+            </div>
+        {% elseif sStyle == 'list' %}
+            <div class="gr-list">
+                {% for obReview in obReviewCollection %}{{ gr.card(obReview) }}{% endfor %}
+            </div>
+        {% else %}
+            <div class="gr-grid">
+                {% for obReview in obReviewCollection %}{{ gr.card(obReview) }}{% endfor %}
+            </div>
+        {% endif %}
 
-        <p class="google-reviews__attribution">
-            <a
-                class="google-reviews__attribution-link"
-                href="https://www.google.com/maps"
-                target="_blank"
-                rel="nofollow noopener"
-            >{{ 'logingrupa.googlereviews::lang.component.attribution'|trans }}</a>
+        <p class="gr-reviews__attribution">
+            <a href="https://www.google.com/maps" target="_blank" rel="nofollow noopener">{{ 'logingrupa.googlereviews::lang.component.attribution'|trans }}</a>
         </p>
     </section>
 

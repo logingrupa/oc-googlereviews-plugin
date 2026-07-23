@@ -11,3 +11,5 @@
     - "Fix API key decryption: SettingsModel::get() bypasses the model accessor, so getApiKey() now decrypts the Encryptable-stored value explicitly (with a legacy-plaintext fallback). Adds Settings encryption round-trip tests."
 1.0.5:
     - "Fix backend settings 500: rename the FormWidgets directory to lowercase (formwidgets) so October autoloads the ReviewPreview widget, and reference the correct FormField::NO_SAVE_DATA constant."
+1.0.6:
+    - "Frontend styling + layouts: the reviewList component now ships restyleable CSS (all --gr-* custom properties) and three selectable styles — grid, list and a vanilla-JS scroll-snap slider (arrows, dots, optional autoplay/shuffle, reduced-motion aware, progressive enhancement). Adds order (best/newest/relevance), overall-rating summary, heading/eyebrow, and registers the component as a RainLab.Pages snippet. Assets can be disabled to fully self-style."

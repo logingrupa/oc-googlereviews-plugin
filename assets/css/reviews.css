@@ -1,0 +1,309 @@
+/*
+ * Google Reviews — frontend styles.
+ * Everything is driven by CSS custom properties: to restyle, override any
+ * --gr-* variable on the .gr-reviews element (or a parent) in your theme.
+ * Example:
+ *   .gr-reviews { --gr-accent: #c7a574; --gr-card-radius: 4px; }
+ */
+.gr-reviews {
+    --gr-accent: #c7a574;
+    --gr-star: #f4b400;
+    --gr-star-empty: #d8d8d8;
+    --gr-text: #2d2d2d;
+    --gr-muted: #8a8a8a;
+    --gr-card-bg: #ffffff;
+    --gr-card-border: rgba(0, 0, 0, .08);
+    --gr-card-radius: 14px;
+    --gr-card-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+    --gr-card-pad: 1.5rem;
+    --gr-gap: 1.25rem;
+    --gr-col-min: 260px;
+    --gr-font: inherit;
+    --gr-max-width: 1200px;
+
+    font-family: var(--gr-font);
+    color: var(--gr-text);
+    max-width: var(--gr-max-width);
+    margin-inline: auto;
+    box-sizing: border-box;
+}
+
+.gr-reviews *,
+.gr-reviews *::before,
+.gr-reviews *::after {
+    box-sizing: inherit;
+}
+
+/* Header */
+.gr-reviews__header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.gr-reviews__eyebrow {
+    margin: 0 0 .5rem;
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gr-accent);
+}
+
+.gr-reviews__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.15;
+}
+
+/* Aggregate */
+.gr-reviews__aggregate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.gr-reviews__rating {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.gr-reviews__count {
+    color: var(--gr-muted);
+    font-size: .9rem;
+}
+
+/* Stars */
+.gr-star {
+    color: var(--gr-star-empty);
+    font-size: 1em;
+    line-height: 1;
+}
+
+.gr-star.is-filled {
+    color: var(--gr-star);
+}
+
+/* Card */
+.gr-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--gr-card-bg);
+    border: 1px solid var(--gr-card-border);
+    border-radius: var(--gr-card-radius);
+    box-shadow: var(--gr-card-shadow);
+    padding: var(--gr-card-pad);
+    height: 100%;
+}
+
+.gr-card__stars {
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+}
+
+.gr-card__text {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--gr-text);
+}
+
+.gr-card__foot {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: auto;
+}
+
+.gr-card__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+
+.gr-card__meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.gr-card__author {
+    font-weight: 600;
+    color: var(--gr-text);
+    text-decoration: none;
+}
+
+.gr-card__author:hover {
+    text-decoration: underline;
+}
+
+.gr-card__date {
+    font-size: .8rem;
+    color: var(--gr-muted);
+}
+
+/* Grid layout */
+.gr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--gr-col-min), 1fr));
+    gap: var(--gr-gap);
+}
+
+/* List layout */
+.gr-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gr-gap);
+}
+
+.gr-list .gr-card__text {
+    font-size: 1.05rem;
+}
+
+/* Slider layout */
+.gr-slider {
+    position: relative;
+}
+
+.gr-slider__viewport {
+    overflow: hidden;
+}
+
+.gr-slider__track {
+    display: flex;
+    gap: var(--gr-gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: .25rem;
+}
+
+.gr-slider__track::-webkit-scrollbar {
+    display: none;
+}
+
+.gr-slider__slide {
+    scroll-snap-align: start;
+    flex: 0 0 clamp(240px, 88%, var(--gr-col-min));
+    min-width: 0;
+}
+
+@media (min-width: 640px) {
+    .gr-slider__slide {
+        flex-basis: calc((100% - var(--gr-gap)) / 2);
+    }
+}
+
+@media (min-width: 960px) {
+    .gr-slider__slide {
+        flex-basis: calc((100% - 2 * var(--gr-gap)) / 3);
+    }
+}
+
+.gr-slider__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--gr-card-border);
+    background: var(--gr-card-bg);
+    color: var(--gr-text);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    box-shadow: var(--gr-card-shadow);
+    transition: background .15s ease, color .15s ease;
+}
+
+.gr-slider__nav:hover {
+    background: var(--gr-accent);
+    color: #fff;
+}
+
+.gr-slider__nav[disabled] {
+    opacity: .35;
+    cursor: default;
+}
+
+.gr-slider__nav--prev {
+    left: -1.1rem;
+}
+
+.gr-slider__nav--next {
+    right: -1.1rem;
+}
+
+.gr-slider__dots {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.25rem;
+}
+
+.gr-slider__dot {
+    width: .55rem;
+    height: .55rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--gr-star-empty);
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease;
+}
+
+.gr-slider__dot.is-active {
+    background: var(--gr-accent);
+    transform: scale(1.25);
+}
+
+/* Attribution */
+.gr-reviews__attribution {
+    margin: 1.5rem 0 0;
+    text-align: center;
+    font-size: .8rem;
+}
+
+.gr-reviews__attribution a {
+    color: var(--gr-muted);
+    text-decoration: none;
+}
+
+.gr-reviews__attribution a:hover {
+    text-decoration: underline;
+}
+
+/* When JS is absent the arrows/dots stay hidden; native scroll still works */
+.gr-slider:not([data-gr-ready]) .gr-slider__nav,
+.gr-slider:not([data-gr-ready]) .gr-slider__dots {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gr-slider__track {
+        scroll-behavior: auto;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .gr-reviews {
+        --gr-text: #e8e8e8;
+        --gr-muted: #9a9a9a;
+        --gr-card-bg: #1c1c1e;
+        --gr-card-border: rgba(255, 255, 255, .1);
+        --gr-star-empty: #444;
+        --gr-card-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+    }
+}
