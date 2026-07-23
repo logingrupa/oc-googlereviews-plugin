@@ -9,3 +9,5 @@
     - "Encrypt the API key at rest (Encryptable) and mask it with the sensitive field type; add a backend live-preview widget (rating, stars, review cards) with a manual AJAX Fetch-now button; extract the shared ReviewFetcher service used by the console command and the preview."
 1.0.4:
     - "Fix API key decryption: SettingsModel::get() bypasses the model accessor, so getApiKey() now decrypts the Encryptable-stored value explicitly (with a legacy-plaintext fallback). Adds Settings encryption round-trip tests."
+1.0.5:
+    - "Fix backend settings 500: rename the FormWidgets directory to lowercase (formwidgets) so October autoloads the ReviewPreview widget, and reference the correct FormField::NO_SAVE_DATA constant."

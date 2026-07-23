@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Logingrupa\GoogleReviews\FormWidgets;
 
+use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
-use Backend\Widgets\Form;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use InvalidArgumentException;
 use Logingrupa\GoogleReviews\Classes\Api\GooglePlacesClient;
@@ -68,7 +68,7 @@ class ReviewPreview extends FormWidgetBase
 
     public function getSaveValue($obValue)
     {
-        return Form::NO_SAVE_DATA;
+        return FormField::NO_SAVE_DATA;
     }
 
     private function runFetch(): void
